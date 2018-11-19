@@ -6,5 +6,7 @@
 </head>
 <body>
 <h1>HELLO!</h1>
+<a href="test">Test Spring</a>
+<a href="customers">View all customers</a>
 </body>
 </html>
