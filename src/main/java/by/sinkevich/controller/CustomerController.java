@@ -18,14 +18,9 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 
-	@GetMapping("/test")
-	public String test() {
-		return "test";
-	}
-
 	@GetMapping("/customers")
 	public String getAllCustomers(Model model) {
 		model.addAttribute("customers", customerService.findAll());
-		return "customersList";
+		return "customers";
 	}
 }

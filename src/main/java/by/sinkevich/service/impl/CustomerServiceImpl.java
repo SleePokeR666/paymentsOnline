@@ -1,7 +1,8 @@
-package by.sinkevich.service;
+package by.sinkevich.service.impl;
 
 import by.sinkevich.dao.CustomerDao;
 import by.sinkevich.model.Customer;
+import by.sinkevich.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

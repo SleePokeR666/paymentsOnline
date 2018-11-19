@@ -1,9 +1,9 @@
 package by.sinkevich.config;
 
 import by.sinkevich.dao.CustomerDao;
-import by.sinkevich.dao.CustomerDaoImpl;
+import by.sinkevich.dao.impl.CustomerDaoImpl;
 import by.sinkevich.service.CustomerService;
-import by.sinkevich.service.CustomerServiceImpl;
+import by.sinkevich.service.impl.CustomerServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -1,20 +1,24 @@
 package by.sinkevich.model;
 
+import java.util.List;
+
 public class Customer {
 
 	private long id;
 	private String name;
 	private String login;
 	private String password;
+	private List<CreditCard> creditCards;
 
 	public Customer() {
 	}
 
-	public Customer(long id, String name, String login, String password) {
+	public Customer(long id, String name, String login, String password, List<CreditCard> creditCards) {
 		this.id = id;
 		this.name = name;
 		this.login = login;
 		this.password = password;
+		this.creditCards = creditCards;
 	}
 
 	public long getId() {
@@ -47,5 +51,13 @@ public class Customer {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<CreditCard> getCreditCards() {
+		return creditCards;
+	}
+
+	public void setCreditCards(List<CreditCard> creditCards) {
+		this.creditCards = creditCards;
 	}
 }

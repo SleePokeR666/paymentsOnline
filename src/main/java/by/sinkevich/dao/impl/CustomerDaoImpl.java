@@ -1,5 +1,6 @@
-package by.sinkevich.dao;
+package by.sinkevich.dao.impl;
 
+import by.sinkevich.dao.CustomerDao;
 import by.sinkevich.mapper.CustomerMapper;
 import by.sinkevich.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
