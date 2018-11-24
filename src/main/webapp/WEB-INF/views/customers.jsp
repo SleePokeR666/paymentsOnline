@@ -15,10 +15,12 @@
 	</tr>
 	<c:forEach items="${customers}" var="customer">
 		<tr>
-			<td>${customer.id}</td>
+			<td><a href="customer/${customer.id}">${customer.id}</a></td>
 			<td>${customer.name}</td>
 			<td>${customer.login}</td>
 			<td>${customer.password}</td>
+			<td><a href="delete/${customer.id}">Delete</a></td>
+			<td><a href="update/${customer.id}">Update</a></td>
 		</tr>
 	</c:forEach>
 </table>
