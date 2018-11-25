@@ -20,8 +20,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public long save(Customer customer) {
-		customerDao.save(customer);
-		return 0;
+		return customerDao.save(customer);
 	}
 
 	@Override

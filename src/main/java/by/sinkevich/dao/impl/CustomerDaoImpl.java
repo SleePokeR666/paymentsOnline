@@ -5,17 +5,22 @@ import by.sinkevich.mapper.CustomerMapper;
 import by.sinkevich.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.List;
 
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
 
-	private final JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate;
 
-	private final CustomerMapper customerMapper;
+	private CustomerMapper customerMapper;
 
 	@Autowired
 	public CustomerDaoImpl(JdbcTemplate jdbcTemplate, CustomerMapper customerMapper) {
@@ -26,13 +31,17 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public long save(Customer customer) {
 		String sql = "INSERT INTO customer (name, login, password) VALUES (?, ?, ?)";
-		PreparedStatementSetter pss = ps -> {
+		KeyHolder keyHolder = new GeneratedKeyHolder();
+		PreparedStatementCreator psc = con -> {
+			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, customer.getName());
 			ps.setString(2, customer.getLogin());
 			ps.setString(3, customer.getPassword());
+			return ps;
 		};
-		jdbcTemplate.update(sql, pss);
-		return 0;
+		jdbcTemplate.update(psc, keyHolder);
+		Number key = keyHolder.getKey();
+		return key != null ? key.longValue() : 0;
 	}
 
 	@Override
