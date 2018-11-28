@@ -30,11 +30,13 @@ public class CreditCardDaoImpl implements CreditCardDao {
 
 	@Override
 	public long save(CreditCard creditCard) {
-		String sql = "INSERT INTO credit_card (number) VALUES (?)";
+		String sql = "INSERT INTO credit_card (number, customer_id, account_id) VALUES (?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		PreparedStatementCreator psc = con -> {
 			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, creditCard.getNumber());
+			ps.setLong(2, creditCard.getCustomer().getId());
+			ps.setLong(3, creditCard.getAccount().getId());
 			return ps;
 		};
 		jdbcTemplate.update(psc, keyHolder);

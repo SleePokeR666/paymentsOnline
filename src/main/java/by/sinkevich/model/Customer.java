@@ -60,4 +60,12 @@ public class Customer {
 	public void setCreditCards(List<CreditCard> creditCards) {
 		this.creditCards = creditCards;
 	}
+
+	public String toString() {
+		return "Customer{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", login='" + login + '\'' +
+				'}';
+	}
 }
