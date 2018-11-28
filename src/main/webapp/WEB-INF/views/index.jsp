@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset="UTF-8">
 	<title>Online Payments</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>

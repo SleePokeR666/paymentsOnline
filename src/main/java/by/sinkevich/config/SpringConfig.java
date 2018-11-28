@@ -20,7 +20,8 @@ public class SpringConfig {
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-		dataSource.setUrl("jdbc:mysql://localhost:3306/payments?useSSL=false&allowPublicKeyRetrieval=true");
+		dataSource.setUrl("jdbc:mysql://localhost:3306/payments?" +
+				"useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8");
 		dataSource.setUsername("root");
 		dataSource.setPassword("pass");
 		return dataSource;

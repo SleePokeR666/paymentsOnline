@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset="UTF-8">
 	<title>Registration</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
@@ -10,7 +10,7 @@
 	<div class="w3-container w3-purple">
 		<h2>Register</h2>
 	</div>
-	<form class="w3-container" action="register" method="post">
+	<form class="w3-container" action="register" method="post" accept-charset="UTF-8">
 		<p>
 			<label class="w3-text-deep-purple"><b>Name</b></label>
 			<input class="w3-input w3-border w3-sand" name="name" type="text">
