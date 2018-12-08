@@ -18,11 +18,6 @@ public class CustomerController {
 		this.customerService = customerService;
 	}
 
-	@GetMapping({"/", "/index"})
-	public String index() {
-		return "index";
-	}
-
 	@GetMapping("/customer/{id}")
 	public String getCustomerById(@PathVariable(value = "id") long id, Model model) {
 		model.addAttribute("customer", customerService.readById(id));
@@ -39,11 +34,6 @@ public class CustomerController {
 	public String deleteCustomerById(@PathVariable(value = "id") long id) {
 		customerService.delete(id);
 		return "redirect:/customers";
-	}
-
-	@GetMapping("/register")
-	public String go2RegisterForm() {
-		return "register";
 	}
 
 	@PostMapping("/register")
