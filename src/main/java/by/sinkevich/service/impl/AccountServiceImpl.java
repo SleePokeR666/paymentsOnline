@@ -27,7 +27,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public Account readById(long id) {
 		return accountDao.readById(id);
 	}
@@ -43,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public List<Account> findAll() {
 		return accountDao.findAll();
 	}

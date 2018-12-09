@@ -15,4 +15,6 @@ public interface CustomerService {
 	void delete(long id);
 
 	List<Customer> findAll();
+
+	Customer login(String login, String password);
 }

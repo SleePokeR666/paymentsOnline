@@ -76,4 +76,12 @@ public class CustomerDaoImpl implements CustomerDao {
 		String sql = "SELECT * FROM customer";
 		return jdbcTemplate.query(sql, customerMapper);
 	}
+
+	@Override
+	public Customer readByLogin(String login) {
+		String sql = "SELECT * FROM customer WHERE login = ?";
+		PreparedStatementSetter pss = ps -> ps.setString(1, login);
+		List<Customer> customers = jdbcTemplate.query(sql, pss, customerMapper);
+		return customers.get(0);
+	}
 }

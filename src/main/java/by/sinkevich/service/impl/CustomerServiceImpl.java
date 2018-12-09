@@ -55,7 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public Customer readById(long id) {
 		return customerDao.readById(id);
 	}
@@ -71,8 +71,17 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public List<Customer> findAll() {
 		return customerDao.findAll();
+	}
+
+	@Override
+	public Customer login(String login, String password) {
+		Customer customer = customerDao.readByLogin(login);
+		if (customer.getPassword().equals(password)) {
+			return customer;
+		}
+		return null;
 	}
 }

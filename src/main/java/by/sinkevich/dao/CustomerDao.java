@@ -16,4 +16,5 @@ public interface CustomerDao {
 
 	List<Customer> findAll();
 
+	Customer readByLogin(String login);
 }

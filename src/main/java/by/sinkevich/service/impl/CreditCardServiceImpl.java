@@ -27,7 +27,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public CreditCard readById(long id) {
 		return creditCardDao.readById(id);
 	}
@@ -43,7 +43,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public List<CreditCard> findAll() {
 		return creditCardDao.findAll();
 	}

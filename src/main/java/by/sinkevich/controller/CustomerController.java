@@ -54,6 +54,12 @@ public class CustomerController {
 		return "redirect:" + customerData.getId();
 	}
 
+	@PostMapping("/login")
+	public String loginCustomer(@ModelAttribute("customerData") Customer customerData, Model model) {
+		Customer customer = customerService.login(customerData.getLogin(), customerData.getPassword());
+		model.addAttribute("customer", customer);
+		return "redirect:" + customer.getId();
+	}
 	/*@GetMapping("/update/{id}")
 	public String updateCustomerForm(@PathVariable(value = "id") long id, Model model) {
 		model.addAttribute("customer", customerService.readById(id));
