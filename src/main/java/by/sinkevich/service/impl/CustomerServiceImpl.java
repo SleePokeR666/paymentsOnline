@@ -11,10 +11,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CustomerServiceImpl implements CustomerService {
 
 	private static final Logger LOG = LogManager.getLogger();
@@ -52,6 +55,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Customer readById(long id) {
 		return customerDao.readById(id);
 	}
@@ -67,6 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Customer> findAll() {
 		return customerDao.findAll();
 	}

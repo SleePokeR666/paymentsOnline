@@ -5,10 +5,13 @@ import by.sinkevich.model.Account;
 import by.sinkevich.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class AccountServiceImpl implements AccountService {
 
 	private AccountDao accountDao;
@@ -24,6 +27,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Account readById(long id) {
 		return accountDao.readById(id);
 	}
@@ -39,6 +43,7 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Account> findAll() {
 		return accountDao.findAll();
 	}

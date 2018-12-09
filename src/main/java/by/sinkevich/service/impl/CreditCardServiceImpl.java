@@ -5,10 +5,13 @@ import by.sinkevich.model.CreditCard;
 import by.sinkevich.service.CreditCardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CreditCardServiceImpl implements CreditCardService {
 
 	private CreditCardDao creditCardDao;
@@ -24,6 +27,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public CreditCard readById(long id) {
 		return creditCardDao.readById(id);
 	}
@@ -39,6 +43,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<CreditCard> findAll() {
 		return creditCardDao.findAll();
 	}
