@@ -8,7 +8,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "by.sinkevich.controller")
+@ComponentScan(basePackages = {
+		"by.sinkevich.controller",
+		"by.sinkevich.exception"
+})
 public class WebConfig implements WebMvcConfigurer {
 
 	@Override

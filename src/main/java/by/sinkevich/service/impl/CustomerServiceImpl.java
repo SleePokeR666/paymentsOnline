@@ -79,9 +79,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer login(String login, String password) {
 		Customer customer = customerDao.readByLogin(login);
-		if (customer.getPassword().equals(password)) {
-			return customer;
+		if (!customer.getPassword().equals(password)) {
+			throw new IllegalArgumentException("Неправильно введён пароль. Попробуйте ещё раз!");
 		}
-		return null;
+		return customer;
 	}
 }
