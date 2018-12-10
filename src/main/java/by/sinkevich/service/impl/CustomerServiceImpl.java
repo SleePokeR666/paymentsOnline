@@ -10,6 +10,7 @@ import by.sinkevich.service.CustomerService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 	private final CreditCardService creditCardService;
 
+	private PasswordEncoder passwordEncoder;
+
 	@Autowired
 	public CustomerServiceImpl(CustomerDao customerDao, AccountService accountService, CreditCardService creditCardService) {
 		this.customerDao = customerDao;
@@ -37,6 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public long save(Customer customer) {
+		encodeCustomerPassword(customer);
 		long customerId = customerDao.save(customer);
 		customer.setId(customerId);
 		LOG.trace(customer + "created in database");
@@ -79,9 +83,19 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Customer login(String login, String password) {
 		Customer customer = customerDao.readByLogin(login);
-		if (!customer.getPassword().equals(password)) {
+		if (!passwordEncoder.matches(password, customer.getPassword())) {
 			throw new IllegalArgumentException("Неправильно введён пароль. Попробуйте ещё раз!");
 		}
 		return customer;
+	}
+
+	private void encodeCustomerPassword(Customer customer) {
+		String encodedPassword = passwordEncoder.encode(customer.getPassword());
+		customer.setPassword(encodedPassword);
+	}
+
+	@Autowired
+	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+		this.passwordEncoder = passwordEncoder;
 	}
 }
