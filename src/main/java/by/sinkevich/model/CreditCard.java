@@ -48,4 +48,11 @@ public class CreditCard {
 	public void setAccount(Account account) {
 		this.account = account;
 	}
+
+	public String toString() {
+		return "CreditCard{" +
+				"id=" + id +
+				", number=" + number +
+				'}';
+	}
 }

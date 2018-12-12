@@ -60,4 +60,12 @@ public class Account {
 	public void setPaymentsHistory(List<Payment> paymentsHistory) {
 		this.paymentsHistory = paymentsHistory;
 	}
+
+	@Override
+	public String toString() {
+		return "Account{" +
+				"id=" + id +
+				", balance=" + balance +
+				'}';
+	}
 }

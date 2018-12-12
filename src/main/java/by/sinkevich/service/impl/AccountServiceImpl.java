@@ -3,6 +3,8 @@ package by.sinkevich.service.impl;
 import by.sinkevich.dao.AccountDao;
 import by.sinkevich.model.Account;
 import by.sinkevich.service.AccountService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -14,6 +16,8 @@ import java.util.List;
 @Transactional(isolation = Isolation.REPEATABLE_READ)
 public class AccountServiceImpl implements AccountService {
 
+	private static final Logger LOG = LogManager.getLogger();
+
 	private AccountDao accountDao;
 
 	@Autowired
@@ -23,7 +27,9 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public long save(Account account) {
-		return accountDao.save(account);
+		account.setId(accountDao.save(account));
+		LOG.trace("{} created in database. " + account);
+		return account.getId();
 	}
 
 	@Override

@@ -3,6 +3,8 @@ package by.sinkevich.service.impl;
 import by.sinkevich.dao.CreditCardDao;
 import by.sinkevich.model.CreditCard;
 import by.sinkevich.service.CreditCardService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -14,6 +16,8 @@ import java.util.List;
 @Transactional(isolation = Isolation.REPEATABLE_READ)
 public class CreditCardServiceImpl implements CreditCardService {
 
+	private static final Logger LOG = LogManager.getLogger();
+
 	private CreditCardDao creditCardDao;
 
 	@Autowired
@@ -23,7 +27,9 @@ public class CreditCardServiceImpl implements CreditCardService {
 
 	@Override
 	public long save(CreditCard creditCard) {
-		return creditCardDao.save(creditCard);
+		creditCard.setId(creditCardDao.save(creditCard));
+		LOG.trace("{} created in database. " + creditCard);
+		return creditCard.getId();
 	}
 
 	@Override

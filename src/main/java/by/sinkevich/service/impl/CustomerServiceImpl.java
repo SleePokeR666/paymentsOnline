@@ -7,6 +7,7 @@ import by.sinkevich.model.Customer;
 import by.sinkevich.service.AccountService;
 import by.sinkevich.service.CreditCardService;
 import by.sinkevich.service.CustomerService;
+import by.sinkevich.util.CreditCardNumberGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,11 @@ public class CustomerServiceImpl implements CustomerService {
 
 	private static final Logger LOG = LogManager.getLogger();
 
-	private final CustomerDao customerDao;
+	private CustomerDao customerDao;
 
-	private final AccountService accountService;
+	private AccountService accountService;
 
-	private final CreditCardService creditCardService;
+	private CreditCardService creditCardService;
 
 	private PasswordEncoder passwordEncoder;
 
@@ -43,15 +44,15 @@ public class CustomerServiceImpl implements CustomerService {
 		encodeCustomerPassword(customer);
 		long customerId = customerDao.save(customer);
 		customer.setId(customerId);
-		LOG.trace(customer + "created in database");
+		LOG.trace("{} created in database. " + customer);
 
 		Account account = new Account();
 		account.setActive(true);
 		account.setBalance(.0d);
-		account.setId(accountService.save(account));
+		accountService.save(account);
 
 		CreditCard creditCard = new CreditCard();
-		creditCard.setNumber((int) (Math.random() * Integer.MAX_VALUE));
+		creditCard.setNumber(CreditCardNumberGenerator.generateCreditCardNumber());
 		creditCard.setAccount(account);
 		creditCard.setCustomer(customer);
 		creditCardService.save(creditCard);
