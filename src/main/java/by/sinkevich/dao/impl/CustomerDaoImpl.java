@@ -18,6 +18,13 @@ import java.util.List;
 @Repository
 public class CustomerDaoImpl implements CustomerDao {
 
+	private static final String SAVE_CUSTOMER_SQL = "INSERT INTO customer (name, login, password) VALUES (?, ?, ?)";
+	private static final String READ_CUSTOMER_BY_ID_SQl = "SELECT * FROM customer WHERE id = ?";
+	private static final String UPDATE_CUSTOMER_SQL = "UPDATE customer SET name = ?, login = ?, password = ? WHERE id = ?";
+	private static final String DELETE_CUSTOMER_BY_ID_SQL = "DELETE FROM customer WHERE id = ?";
+	private static final String FIND_ALL_CUSTOMERS_SQL = "SELECT * FROM customer";
+	private static final String READ_CUSTOMER_BY_LOGIN_SQL = "SELECT * FROM customer WHERE login = ?";
+
 	private JdbcTemplate jdbcTemplate;
 
 	private CustomerMapper customerMapper;
@@ -30,10 +37,9 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public long save(Customer customer) {
-		String sql = "INSERT INTO customer (name, login, password) VALUES (?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		PreparedStatementCreator psc = con -> {
-			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = con.prepareStatement(SAVE_CUSTOMER_SQL, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, customer.getName());
 			ps.setString(2, customer.getLogin());
 			ps.setString(3, customer.getPassword());
@@ -46,42 +52,37 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public Customer readById(long id) {
-		String sql = "SELECT * FROM customer WHERE id = ?";
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		List<Customer> customers = jdbcTemplate.query(sql, pss, customerMapper);
+		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_SQl, pss, customerMapper);
 		return customers.get(0);
 	}
 
 	@Override
 	public void update(Customer customer) {
-		String sql = "UPDATE customer SET name = ?, login = ?, password = ? WHERE id = ?";
 		PreparedStatementSetter pss = ps -> {
 			ps.setString(1, customer.getName());
 			ps.setString(2, customer.getLogin());
 			ps.setString(3, customer.getPassword());
 			ps.setLong(4, customer.getId());
 		};
-		jdbcTemplate.update(sql, pss);
+		jdbcTemplate.update(UPDATE_CUSTOMER_SQL, pss);
 	}
 
 	@Override
 	public void delete(long id) {
-		String sql = "DELETE FROM customer WHERE id = ?";
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		jdbcTemplate.update(sql, pss);
+		jdbcTemplate.update(DELETE_CUSTOMER_BY_ID_SQL, pss);
 	}
 
 	@Override
 	public List<Customer> findAll() {
-		String sql = "SELECT * FROM customer";
-		return jdbcTemplate.query(sql, customerMapper);
+		return jdbcTemplate.query(FIND_ALL_CUSTOMERS_SQL, customerMapper);
 	}
 
 	@Override
 	public Customer readByLogin(String login) {
-		String sql = "SELECT * FROM customer WHERE login = ?";
 		PreparedStatementSetter pss = ps -> ps.setString(1, login);
-		List<Customer> customers = jdbcTemplate.query(sql, pss, customerMapper);
+		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_LOGIN_SQL, pss, customerMapper);
 		return customers.get(0);
 	}
 }
