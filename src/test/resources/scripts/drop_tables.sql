@@ -1,0 +1,4 @@
+DROP TABLE IF EXISTS `payment`;
+DROP TABLE IF EXISTS `credit_card`;
+DROP TABLE IF EXISTS `account`;
+DROP TABLE IF EXISTS `customer`;

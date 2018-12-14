@@ -1,6 +1,7 @@
 package by.sinkevich.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class Customer {
 
@@ -67,5 +68,21 @@ public class Customer {
 				", name='" + name + '\'' +
 				", login='" + login + '\'' +
 				'}';
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Customer)) return false;
+		Customer customer = (Customer) o;
+		return id == customer.id &&
+				name.equals(customer.name) &&
+				login.equals(customer.login) &&
+				password.equals(customer.password);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, login, password);
 	}
 }
