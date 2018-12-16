@@ -97,7 +97,7 @@
 			</div>
 
 			<c:if test="${customer.isAdmin}">
-				<button class="w3-button w3-green">Список клиентов</button>
+				<a href="customers" class="w3-button w3-green">Список клиентов</a>
 			</c:if>
 
 			<!-- End right column -->

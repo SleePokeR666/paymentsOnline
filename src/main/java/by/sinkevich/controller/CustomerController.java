@@ -34,12 +34,6 @@ public class CustomerController {
 		return "customer/customer";
 	}
 
-	/*@GetMapping("/customers")
-	public String getAllCustomers(Model model) {
-		model.addAttribute("customers", customerService.findAll());
-		return "customers";
-	}
-*/
 /*
 	@GetMapping("/delete/{id}")
 	public String deleteCustomerById(@PathVariable(value = "id") long id) {
@@ -67,6 +61,13 @@ public class CustomerController {
 		status.setComplete();
 		return "redirect:/index";
 	}
+
+	@GetMapping("/customers")
+	public String getAllCustomers(Model model) {
+		model.addAttribute("customers", customerService.findAll());
+		return "/admin/customers";
+	}
+
 
 	/*@GetMapping("/update/{id}")
 	public String updateCustomerForm(@PathVariable(value = "id") long id, Model model) {

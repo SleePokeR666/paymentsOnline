@@ -25,12 +25,18 @@ public class CustomerDaoImpl implements CustomerDao {
 			"SELECT customer.id AS customer_id, customer.name, customer.login, customer.password, customer.is_admin, " +
 					"credit_card.id AS credit_card_id, credit_card.number, " +
 					"account.id AS account_id, account.balance, account.active " +
-					"FROM payments.customer, payments.credit_card, payments.account " +
+					"FROM customer, credit_card, account " +
 					"WHERE customer.id = credit_card.customer_id AND credit_card.account_id = account.id " +
 					"AND customer.id = ?";
-	private static final String UPDATE_CUSTOMER_SQL = "UPDATE customer SET name = ?, login = ?, password = ? WHERE id = ?";
+	private static final String UPDATE_CUSTOMER_SQL = "UPDATE customer SET name = ?, login = ?, password = ?, is_admin = ? WHERE id = ?";
 	private static final String DELETE_CUSTOMER_BY_ID_SQL = "DELETE FROM customer WHERE id = ?";
-	private static final String FIND_ALL_CUSTOMERS_SQL = "SELECT * FROM customer";
+	private static final String FIND_ALL_CUSTOMERS_SQL_LAZY = "SELECT * FROM customer";
+	private static final String FIND_ALL_CUSTOMERS_SQL_NOT_LAZY =
+			"SELECT customer.id AS customer_id, customer.name, customer.login, customer.password, customer.is_admin, " +
+			"credit_card.id AS credit_card_id, credit_card.number, " +
+			"account.id AS account_id, account.balance, account.active " +
+			"FROM customer, credit_card, account " +
+			"WHERE customer.id = credit_card.customer_id AND credit_card.account_id = account.id";
 	private static final String READ_CUSTOMER_BY_LOGIN_SQL = "SELECT * FROM customer WHERE login = ?";
 
 	private JdbcTemplate jdbcTemplate;
@@ -78,7 +84,8 @@ public class CustomerDaoImpl implements CustomerDao {
 			ps.setString(1, customer.getName());
 			ps.setString(2, customer.getLogin());
 			ps.setString(3, customer.getPassword());
-			ps.setLong(4, customer.getId());
+			ps.setBoolean(4, customer.getIsAdmin());
+			ps.setLong(5, customer.getId());
 		};
 		jdbcTemplate.update(UPDATE_CUSTOMER_SQL, pss);
 	}
@@ -91,7 +98,7 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public List<Customer> findAll() {
-		return jdbcTemplate.query(FIND_ALL_CUSTOMERS_SQL, customerMapper);
+		return jdbcTemplate.query(FIND_ALL_CUSTOMERS_SQL_LAZY, customerMapper);
 	}
 
 	@Override

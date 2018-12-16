@@ -3,37 +3,40 @@
 <html>
 <head>
 	<title>Users list</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
-<h1>Customers!</h1>
-<table>
-	<tr>
-		<th>Id</th>
-		<th>Name</th>
-		<th>Login</th>
-		<th>Password</th>
-	</tr>
-	<c:forEach items="${customers}" var="customer">
-		<tr>
-			<td><a href="customer/${customer.id}">${customer.id}</a></td>
-			<td>${customer.name}</td>
-			<td>${customer.login}</td>
-			<td>${customer.password}</td>
-			<td><a href="delete/${customer.id}">Delete</a></td>
-			<td><a href="update/${customer.id}">Update</a></td>
+<div class="w3-container">
+	<h1>Customers</h1>
+	<table class="w3-table-all w3-hoverable">
+		<tr class="w3-light-grey">
+			<th>Id</th>
+			<th>Name</th>
+			<th>Login</th>
+			<th>Password</th>
+			<th>Card Number</th>
+			<th>Account balance</th>
+			<th>Account status</th>
 		</tr>
-	</c:forEach>
-</table>
+		<c:forEach items="${customers}" var="customer">
+			<c:forEach items="${customer.creditCards}" var="creditCard">
+				<tr>
+					<td><a href="customer/${customer.id}">${customer.id}</a></td>
+					<td>${customer.name}</td>
+					<td>${customer.login}</td>
+					<td>${customer.password}</td>
+					<td>${creditCard.number}</td>
+					<td>${creditCard.account.balance}</td>
+					<td>${creditCard.account.active}</td>
+					<td><a href="delete/${customer.id}">Delete</a></td>
+					<td><a href="update/${customer.id}">Update</a></td>
+				</tr>
+			</c:forEach>
+		</c:forEach>
+	</table>
+</div>
 <a href="index">На главную</a>
-<p>
-<table>
-	<tr>
-		<th>Id ${customer.id}</th>
-		<th>Name ${customer.name}</th>
-		<th>Login ${customer.login}</th>
-		<th>Password ${customer.password}</th>
-	</tr>
-</table>
-</p>
 </body>
 </html>

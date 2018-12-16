@@ -33,6 +33,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		expected.setName("Denis");
 		expected.setPassword("Password2");
 		expected.setLogin("Login2");
+		expected.setIsAdmin(true);
 
 		expected.setId(customerDao.save(expected));
 
@@ -48,6 +49,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		expected.setName("Денис");
 		expected.setPassword("Password");
 		expected.setLogin("Login");
+		expected.setIsAdmin(true);
 
 		Customer actual = customerDao.readByIdLazy(1);
 
@@ -61,6 +63,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		expected.setName("ChangedName");
 		expected.setPassword("ChangedPassword");
 		expected.setLogin("ChangedLogin");
+		expected.setIsAdmin(true);
 
 		customerDao.update(expected);
 
@@ -76,6 +79,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		expectedCustomer.setName("Денис");
 		expectedCustomer.setPassword("Password");
 		expectedCustomer.setLogin("Login");
+		expectedCustomer.setIsAdmin(true);
 		expected.add(expectedCustomer);
 
 		List<Customer> actual = customerDao.findAll();

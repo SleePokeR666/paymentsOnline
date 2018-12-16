@@ -44,6 +44,7 @@ CREATE TABLE `customer`
   `name`     varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `login`    varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_admin` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`)
