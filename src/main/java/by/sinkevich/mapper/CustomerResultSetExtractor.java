@@ -27,6 +27,7 @@ public class CustomerResultSetExtractor implements ResultSetExtractor<List<Custo
 				customer.setName(rs.getString("name"));
 				customer.setLogin(rs.getString("login"));
 				customer.setPassword(rs.getString("password"));
+				customer.setIsAdmin(rs.getBoolean("is_admin"));
 			}
 
 			CreditCard creditCard = new CreditCard();

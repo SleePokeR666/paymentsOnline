@@ -2,9 +2,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="en">
 <head>
+	<title>Main page</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Main page</title>
 	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body class="w3-light-grey">
@@ -12,12 +12,12 @@
 <!-- Page container -->
 <div class="w3-container">
 	<header class="w3-blue-grey w3-center">
-		<h1>Онлайн платежи, как бальзам для души!</h1>
+		<h1>Online payments</h1>
 	</header>
 
 	<!-- User info -->
 	<div class="w3-panel">
-		<a href="../index" class="w3-bar-item w3-button w3-deep-purple w3-right w3-margin">Logout
+		<a href="logout" class="w3-bar-item w3-button w3-deep-purple w3-right w3-margin">Logout
 		</a>
 		<p>${customer.name}</p>
 		<p>${customer.login}</p>
@@ -30,7 +30,7 @@
 		<div class="w3-col l2">
 			<div class="w3-container w3-light-blue">
 				<h1>
-					Здесь будет полезная левая панель!
+					Left panel
 				</h1>
 			</div>
 			<!-- End left column -->
@@ -40,7 +40,7 @@
 		<div class="w3-col l8">
 			<div class="w3-row-padding w3-light-blue">
 				<h1>
-					Здесь будет информация об аккаунте!
+					Account info
 				</h1>
 				<c:forEach items="${customer.creditCards}" var="creditCard">
 					<div class="w3-third">
@@ -93,8 +93,12 @@
 		<!-- Right column -->
 		<div class="w3-col l2">
 			<div class="w3-container w3-light-blue">
-				Здесь будет полезная правая панель!
+				Right panel
 			</div>
+
+			<c:if test="${customer.isAdmin}">
+				<button class="w3-button w3-green">Список клиентов</button>
+			</c:if>
 
 			<!-- End right column -->
 		</div>
@@ -102,7 +106,7 @@
 		<!-- End the grid -->
 	</div>
 	<footer class="w3-blue-grey w3-center">
-		<h1>Самый тёмный подвал в мире!</h1>
+		<h1>Footer</h1>
 	</footer>
 
 	<!-- End page container -->

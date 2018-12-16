@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
 @RequestMapping("/customer")
@@ -29,7 +30,7 @@ public class CustomerController {
 	}
 
 	@GetMapping("/{id}")
-	public String getCustomerById() {
+	public String getById() {
 		return "customer/customer";
 	}
 
@@ -48,18 +49,25 @@ public class CustomerController {
 */
 
 	@PostMapping("/register")
-	public String registerCustomer(@ModelAttribute("customerData") Customer customerData, Model model) {
+	public String register(@ModelAttribute("customerData") Customer customerData, Model model) {
 		customerService.save(customerData);
 		model.addAttribute("customer", customerData);
 		return "redirect:" + customerData.getId();
 	}
 
 	@PostMapping("/login")
-	public String loginCustomer(@ModelAttribute("customerData") Customer customerData, Model model) {
+	public String login(@ModelAttribute("customerData") Customer customerData, Model model) {
 		Customer customer = customerService.readByLogin(customerData.getLogin(), customerData.getPassword());
 		model.addAttribute("customer", customer);
 		return "redirect:" + customer.getId();
 	}
+
+	@GetMapping("/logout")
+	public String logout(SessionStatus status) {
+		status.setComplete();
+		return "redirect:/index";
+	}
+
 	/*@GetMapping("/update/{id}")
 	public String updateCustomerForm(@PathVariable(value = "id") long id, Model model) {
 		model.addAttribute("customer", customerService.readByIdLazy(id));

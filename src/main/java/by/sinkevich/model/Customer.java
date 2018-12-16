@@ -10,16 +10,20 @@ public class Customer {
 	private String login;
 	private String password;
 	private List<CreditCard> creditCards;
+	private boolean isAdmin;
 
 	public Customer() {
+
 	}
 
-	public Customer(long id, String name, String login, String password, List<CreditCard> creditCards) {
+	public Customer(long id, String name, String login, String password,
+					List<CreditCard> creditCards, boolean isAdmin) {
 		this.id = id;
 		this.name = name;
 		this.login = login;
 		this.password = password;
 		this.creditCards = creditCards;
+		this.isAdmin = isAdmin;
 	}
 
 	public long getId() {
@@ -60,6 +64,14 @@ public class Customer {
 
 	public void setCreditCards(List<CreditCard> creditCards) {
 		this.creditCards = creditCards;
+	}
+
+	public boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(boolean admin) {
+		this.isAdmin = admin;
 	}
 
 	public String toString() {

@@ -22,7 +22,7 @@ public class CustomerDaoImpl implements CustomerDao {
 	private static final String SAVE_CUSTOMER_SQL = "INSERT INTO customer (name, login, password) VALUES (?, ?, ?)";
 	private static final String READ_CUSTOMER_BY_ID_LAZY_SQl = "SELECT * FROM customer WHERE id = ?";
 	private static final String READ_CUSTOMER_BY_ID_SQl =
-			"SELECT customer.id AS customer_id, customer.name, customer.login, customer.password, " +
+			"SELECT customer.id AS customer_id, customer.name, customer.login, customer.password, customer.is_admin, " +
 					"credit_card.id AS credit_card_id, credit_card.number, " +
 					"account.id AS account_id, account.balance, account.active " +
 					"FROM payments.customer, payments.credit_card, payments.account " +

@@ -17,6 +17,7 @@ public class CustomerMapper implements RowMapper<Customer> {
 		customer.setName(resultSet.getString("name"));
 		customer.setLogin(resultSet.getString("login"));
 		customer.setPassword(resultSet.getString("password"));
+		customer.setIsAdmin(resultSet.getBoolean("is_admin"));
 		return customer;
 	}
 }
