@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,7 +57,17 @@ public class CustomerServiceImpl implements CustomerService {
 		creditCard.setAccount(account);
 		creditCard.setCustomer(customer);
 		creditCardService.save(creditCard);
+
+		List<CreditCard> creditCards = new ArrayList<>();
+		creditCards.add(creditCard);
+		customer.setCreditCards(creditCards);
 		return customerId;
+	}
+
+	@Override
+	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+	public Customer readByIdLazy(long id) {
+		return customerDao.readByIdLazy(id);
 	}
 
 	@Override
@@ -82,12 +93,13 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer login(String login, String password) {
+	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+	public Customer readByLogin(String login, String password) {
 		Customer customer = customerDao.readByLogin(login);
 		if (!passwordEncoder.matches(password, customer.getPassword())) {
 			throw new IllegalArgumentException("Неправильно введён пароль. Попробуйте ещё раз!");
 		}
-		return customer;
+		return customerDao.readById(customer.getId());
 	}
 
 	private void encodeCustomerPassword(Customer customer) {

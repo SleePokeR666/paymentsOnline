@@ -8,6 +8,8 @@ public interface CustomerService {
 
 	long save(Customer customer);
 
+	Customer readByIdLazy(long id);
+
 	Customer readById(long id);
 
 	void update(Customer customer);
@@ -16,5 +18,5 @@ public interface CustomerService {
 
 	List<Customer> findAll();
 
-	Customer login(String login, String password);
+	Customer readByLogin(String login, String password);
 }

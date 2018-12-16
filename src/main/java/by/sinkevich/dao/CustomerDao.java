@@ -8,6 +8,8 @@ public interface CustomerDao {
 
 	long save(Customer customer);
 
+	Customer readByIdLazy(long id);
+
 	Customer readById(long id);
 
 	void update(Customer customer);

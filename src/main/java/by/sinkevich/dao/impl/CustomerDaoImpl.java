@@ -2,6 +2,7 @@ package by.sinkevich.dao.impl;
 
 import by.sinkevich.dao.CustomerDao;
 import by.sinkevich.mapper.CustomerMapper;
+import by.sinkevich.mapper.CustomerResultSetExtractor;
 import by.sinkevich.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -19,7 +20,14 @@ import java.util.List;
 public class CustomerDaoImpl implements CustomerDao {
 
 	private static final String SAVE_CUSTOMER_SQL = "INSERT INTO customer (name, login, password) VALUES (?, ?, ?)";
-	private static final String READ_CUSTOMER_BY_ID_SQl = "SELECT * FROM customer WHERE id = ?";
+	private static final String READ_CUSTOMER_BY_ID_LAZY_SQl = "SELECT * FROM customer WHERE id = ?";
+	private static final String READ_CUSTOMER_BY_ID_SQl =
+			"SELECT customer.id AS customer_id, customer.name, customer.login, customer.password, " +
+					"credit_card.id AS credit_card_id, credit_card.number, " +
+					"account.id AS account_id, account.balance, account.active " +
+					"FROM payments.customer, payments.credit_card, payments.account " +
+					"WHERE customer.id = credit_card.customer_id AND credit_card.account_id = account.id " +
+					"AND customer.id = ?";
 	private static final String UPDATE_CUSTOMER_SQL = "UPDATE customer SET name = ?, login = ?, password = ? WHERE id = ?";
 	private static final String DELETE_CUSTOMER_BY_ID_SQL = "DELETE FROM customer WHERE id = ?";
 	private static final String FIND_ALL_CUSTOMERS_SQL = "SELECT * FROM customer";
@@ -51,9 +59,16 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
+	public Customer readByIdLazy(long id) {
+		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
+		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_LAZY_SQl, pss, customerMapper);
+		return customers.get(0);
+	}
+
+	@Override
 	public Customer readById(long id) {
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_SQl, pss, customerMapper);
+		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_SQl, pss, new CustomerResultSetExtractor());
 		return customers.get(0);
 	}
 

@@ -18,7 +18,6 @@ import static org.testng.Assert.assertEquals;
 @ContextConfiguration(classes = {SpringConfig.class})
 @TestPropertySource(properties = {"datasource.url = jdbc:mysql://localhost:3306/test_payments"})
 @Sql(scripts = {
-		"classpath:scripts/drop_tables.sql",
 		"classpath:scripts/create_tables.sql",
 		"classpath:scripts/insert_data.sql"
 })
@@ -37,7 +36,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 
 		expected.setId(customerDao.save(expected));
 
-		Customer actual = customerDao.readById(expected.getId());
+		Customer actual = customerDao.readByIdLazy(expected.getId());
 
 		assertEquals(actual, expected);
 	}
@@ -50,7 +49,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		expected.setPassword("Password");
 		expected.setLogin("Login");
 
-		Customer actual = customerDao.readById(1);
+		Customer actual = customerDao.readByIdLazy(1);
 
 		assertEquals(actual, expected);
 	}
@@ -65,7 +64,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 
 		customerDao.update(expected);
 
-		Customer actual = customerDao.readById(1);
+		Customer actual = customerDao.readByIdLazy(1);
 		assertEquals(actual, expected);
 	}
 
