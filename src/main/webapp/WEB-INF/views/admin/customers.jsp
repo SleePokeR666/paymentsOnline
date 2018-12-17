@@ -15,7 +15,6 @@
 			<th>Id</th>
 			<th>Name</th>
 			<th>Login</th>
-			<th>Password</th>
 			<th>Card Number</th>
 			<th>Account balance</th>
 			<th>Account status</th>
@@ -26,11 +25,20 @@
 					<td><a href="customer/${customer.id}">${customer.id}</a></td>
 					<td>${customer.name}</td>
 					<td>${customer.login}</td>
-					<td>${customer.password}</td>
 					<td>${creditCard.number}</td>
 					<td>${creditCard.account.balance}</td>
-					<td>${creditCard.account.isActive}</td>
-					<td><a href="delete/${customer.id}">Delete</a></td>
+					<c:choose>
+						<c:when test="${creditCard.account.isActive}">
+							<td>Active <a href="account/${creditCard.account.id}/block">Block
+								account</a>
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td>Active <a href="account/${creditCard.account.id}/unblock">Unblock
+								account</a>
+							</td>
+						</c:otherwise>
+					</c:choose>
 					<td><a href="update/${customer.id}">Update</a></td>
 				</tr>
 			</c:forEach>

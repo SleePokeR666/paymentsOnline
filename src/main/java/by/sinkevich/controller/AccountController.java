@@ -8,7 +8,6 @@ import by.sinkevich.service.AccountService;
 import by.sinkevich.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -33,11 +32,22 @@ public class AccountController {
 	@GetMapping("customer/account/{accountId}/block")
 	public String block(@SessionAttribute Customer customer, @PathVariable long accountId) {
 		Account account = getAccountByIdFromCustomer(customer, accountId);
-		if (account != null) {
-			account.setIsActive(false);
+		String view = "redirect:/customer/" + customer.getId();
+		if (account == null) {
+			account = accountService.readById(accountId);
+			view = "redirect:/customer/customers";
 		}
+		account.setIsActive(false);
 		accountService.update(account);
-		return "redirect:/customer/" + customer.getId();
+		return view;
+	}
+
+	@GetMapping("customer/account/{accountId}/unblock")
+	public String unBlock(@PathVariable long accountId) {
+		Account account = accountService.readById(accountId);
+		account.setIsActive(true);
+		accountService.update(account);
+		return "redirect:/customer/customers";
 	}
 
 	@GetMapping("customer/account/{accountId}/deposit")

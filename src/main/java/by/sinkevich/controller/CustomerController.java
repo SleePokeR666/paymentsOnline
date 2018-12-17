@@ -25,7 +25,7 @@ public class CustomerController {
 		if (customer == null) {
 			return "redirect:/login";
 		} else {
-			return "redirect:" + customer.getId();
+			return "redirect:/customer/" + customer.getId();
 		}
 	}
 
@@ -33,14 +33,6 @@ public class CustomerController {
 	public String getById() {
 		return "customer/customer";
 	}
-
-/*
-	@GetMapping("/delete/{id}")
-	public String deleteCustomerById(@PathVariable(value = "id") long id) {
-		customerService.delete(id);
-		return "redirect:/customers";
-	}
-*/
 
 	@PostMapping("/register")
 	public String register(@ModelAttribute("customerData") Customer customerData, Model model) {
