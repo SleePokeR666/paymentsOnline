@@ -49,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
 		LOG.debug("{} created in database. " + customer);
 
 		Account account = new Account();
-		account.setActive(true);
+		account.setIsActive(true);
 		account.setBalance(.0d);
 		accountService.save(account);
 

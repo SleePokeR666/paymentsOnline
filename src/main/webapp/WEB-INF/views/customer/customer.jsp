@@ -45,47 +45,44 @@
 				<c:forEach items="${customer.creditCards}" var="creditCard">
 					<div class="w3-third">
 						<div class="w3-card-4 w3-dark-grey">
-							<div class="w3-container w3-center">
-								<h3>${creditCard.account.id}</h3>
-
-								<h3>${creditCard.number}</h3>
-								<div class="w3-section">
-									<button class="w3-button w3-green">Пополнить баланс</button>
-									<button class="w3-button w3-red">Заблокировать карту</button>
-								</div>
+							<div class="w3-container">
+								<div>Номер счёта: ${creditCard.account.id}</div>
+								<div class="w3-center">Баланс</div>
+								<p class="w3-center">${creditCard.account.balance}</p>
+								<div>Номер карты: ${creditCard.number}</div>
+								<c:choose>
+									<c:when test="${creditCard.account.isActive}">
+										<div class="w3-section w3-center">
+											<a class="w3-button w3-green">Сделать перевод</a>
+										</div>
+										<div class="w3-section w3-center">
+											<a class="w3-button w3-green">Пополнить счёт</a>
+											<a href="account/${creditCard.account.id}/block"
+											   class="w3-button w3-red">Заблокировать счёт</a>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<h3 class="w3-center">Счёт заблокирован</h3>
+										<div class="w3-section w3-center">
+											<button class="w3-button w3-green" disabled>Сделать
+												перевод
+											</button>
+										</div>
+										<div class="w3-section w3-center">
+											<button class="w3-button w3-green" disabled>Пополнить
+												счёт
+											</button>
+											<button class="w3-button w3-red" disabled>Заблокировать
+												счёт
+											</button>
+										</div>
+									</c:otherwise>
+								</c:choose>
 							</div>
-
-						</div>
-					</div>
-					<div class="w3-third">
-						<div class="w3-card-4 w3-dark-grey">
-							<div class="w3-container w3-center">
-								<h3>${creditCard.account.id}</h3>
-
-								<h3>${creditCard.number}</h3>
-								<div class="w3-section">
-									<button class="w3-button w3-green">Пополнить баланс</button>
-									<button class="w3-button w3-red">Заблокировать карту</button>
-								</div>
-							</div>
-
-						</div>
-					</div>
-					<div class="w3-third">
-						<div class="w3-card-4 w3-dark-grey">
-							<div class="w3-container w3-center">
-								<h3>${creditCard.account.id}</h3>
-
-								<h3>${creditCard.number}</h3>
-								<div class="w3-section">
-									<button class="w3-button w3-green">Пополнить баланс</button>
-									<button class="w3-button w3-red">Заблокировать карту</button>
-								</div>
-							</div>
-
 						</div>
 					</div>
 				</c:forEach>
+				<div class="w3-clear"></div>
 			</div>
 			<!-- End middle column -->
 		</div>

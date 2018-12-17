@@ -35,7 +35,7 @@ public class AccountDaoImpl implements AccountDao {
 		PreparedStatementCreator psc = con -> {
 			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setDouble(1, account.getBalance());
-			ps.setBoolean(2, account.isActive());
+			ps.setBoolean(2, account.getIsActive());
 			return ps;
 		};
 		jdbcTemplate.update(psc, keyHolder);
@@ -56,7 +56,7 @@ public class AccountDaoImpl implements AccountDao {
 		String sql = "UPDATE account SET balance = ?, active = ? WHERE id = ?";
 		PreparedStatementSetter pss = ps -> {
 			ps.setDouble(1, account.getBalance());
-			ps.setBoolean(2, account.isActive());
+			ps.setBoolean(2, account.getIsActive());
 			ps.setLong(3, account.getId());
 		};
 		jdbcTemplate.update(sql, pss);

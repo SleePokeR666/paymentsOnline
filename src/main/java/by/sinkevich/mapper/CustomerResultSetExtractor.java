@@ -39,7 +39,7 @@ public class CustomerResultSetExtractor implements ResultSetExtractor<List<Custo
 			Account account = new Account();
 			account.setId(rs.getLong("account_id"));
 			account.setBalance(rs.getDouble("balance"));
-			account.setActive(rs.getBoolean("active"));
+			account.setIsActive(rs.getBoolean("active"));
 
 			creditCard.setCustomer(customer);
 			creditCard.setAccount(account);

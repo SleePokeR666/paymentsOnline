@@ -29,7 +29,7 @@
 					<td>${customer.password}</td>
 					<td>${creditCard.number}</td>
 					<td>${creditCard.account.balance}</td>
-					<td>${creditCard.account.active}</td>
+					<td>${creditCard.account.isActive}</td>
 					<td><a href="delete/${customer.id}">Delete</a></td>
 					<td><a href="update/${customer.id}">Update</a></td>
 				</tr>

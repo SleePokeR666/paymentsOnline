@@ -15,7 +15,7 @@ public class AccountRowMapper implements RowMapper<Account> {
 		Account account = new Account();
 		account.setId(rs.getLong("id"));
 		account.setBalance(rs.getDouble("balance"));
-		account.setActive(rs.getBoolean("active"));
+		account.setIsActive(rs.getBoolean("active"));
 		return account;
 	}
 }
