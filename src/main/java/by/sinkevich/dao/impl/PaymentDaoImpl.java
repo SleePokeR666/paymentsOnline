@@ -8,11 +8,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 
+@Repository
 public class PaymentDaoImpl implements PaymentDao {
 
 	private static final String SAVE_PAYMENT_SQL = "INSERT INTO payment " +
