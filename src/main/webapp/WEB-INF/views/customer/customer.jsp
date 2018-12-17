@@ -56,7 +56,9 @@
 											<a class="w3-button w3-green">Сделать перевод</a>
 										</div>
 										<div class="w3-section w3-center">
-											<a class="w3-button w3-green">Пополнить счёт</a>
+											<a href="account/${creditCard.account.id}/deposit"
+											   class="w3-button w3-green">Пополнить
+												счёт</a>
 											<a href="account/${creditCard.account.id}/block"
 											   class="w3-button w3-red">Заблокировать счёт</a>
 										</div>
