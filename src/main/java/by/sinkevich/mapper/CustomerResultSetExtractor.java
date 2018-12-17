@@ -5,11 +5,13 @@ import by.sinkevich.model.CreditCard;
 import by.sinkevich.model.Customer;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Component;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+@Component
 public class CustomerResultSetExtractor implements ResultSetExtractor<List<Customer>> {
 
 	@Override

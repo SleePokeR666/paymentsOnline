@@ -1,7 +1,7 @@
 package by.sinkevich.dao.impl;
 
 import by.sinkevich.dao.CustomerDao;
-import by.sinkevich.mapper.CustomerMapper;
+import by.sinkevich.mapper.CustomerRowMapper;
 import by.sinkevich.mapper.CustomerResultSetExtractor;
 import by.sinkevich.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +28,11 @@ public class CustomerDaoImpl implements CustomerDao {
 					"FROM customer, credit_card, account " +
 					"WHERE customer.id = credit_card.customer_id AND credit_card.account_id = account.id " +
 					"AND customer.id = ?";
-	private static final String UPDATE_CUSTOMER_SQL = "UPDATE customer SET name = ?, login = ?, password = ?, is_admin = ? WHERE id = ?";
+	private static final String UPDATE_CUSTOMER_SQL =
+			"UPDATE customer SET name = ?, login = ?, password = ?, is_admin = ? WHERE id = ?";
 	private static final String DELETE_CUSTOMER_BY_ID_SQL = "DELETE FROM customer WHERE id = ?";
 	private static final String FIND_ALL_CUSTOMERS_SQL_LAZY = "SELECT * FROM customer";
-	private static final String FIND_ALL_CUSTOMERS_SQL_NOT_LAZY =
+	private static final String FIND_ALL_CUSTOMERS_SQL =
 			"SELECT customer.id AS customer_id, customer.name, customer.login, customer.password, customer.is_admin, " +
 			"credit_card.id AS credit_card_id, credit_card.number, " +
 			"account.id AS account_id, account.balance, account.active " +
@@ -41,12 +42,15 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	private JdbcTemplate jdbcTemplate;
 
-	private CustomerMapper customerMapper;
+	private CustomerRowMapper rowMapper;
+
+	private CustomerResultSetExtractor resultSetExtractor;
 
 	@Autowired
-	public CustomerDaoImpl(JdbcTemplate jdbcTemplate, CustomerMapper customerMapper) {
+	public CustomerDaoImpl(JdbcTemplate jdbcTemplate, CustomerRowMapper rowMapper, CustomerResultSetExtractor resultSetExtractor) {
 		this.jdbcTemplate = jdbcTemplate;
-		this.customerMapper = customerMapper;
+		this.rowMapper = rowMapper;
+		this.resultSetExtractor = resultSetExtractor;
 	}
 
 	@Override
@@ -67,14 +71,14 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public Customer readByIdLazy(long id) {
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_LAZY_SQl, pss, customerMapper);
+		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_LAZY_SQl, pss, rowMapper);
 		return customers.get(0);
 	}
 
 	@Override
 	public Customer readById(long id) {
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_SQl, pss, new CustomerResultSetExtractor());
+		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_SQl, pss, resultSetExtractor);
 		return customers.get(0);
 	}
 
@@ -97,14 +101,19 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	@Override
+	public List<Customer> finaAllLazy() {
+		return jdbcTemplate.query(FIND_ALL_CUSTOMERS_SQL_LAZY, rowMapper);
+	}
+
+	@Override
 	public List<Customer> findAll() {
-		return jdbcTemplate.query(FIND_ALL_CUSTOMERS_SQL_LAZY, customerMapper);
+		return jdbcTemplate.query(FIND_ALL_CUSTOMERS_SQL, resultSetExtractor);
 	}
 
 	@Override
 	public Customer readByLogin(String login) {
 		PreparedStatementSetter pss = ps -> ps.setString(1, login);
-		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_LOGIN_SQL, pss, customerMapper);
+		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_LOGIN_SQL, pss, rowMapper);
 		return customers.get(0);
 	}
 }

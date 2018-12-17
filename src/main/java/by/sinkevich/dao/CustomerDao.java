@@ -16,6 +16,8 @@ public interface CustomerDao {
 
 	void delete(long id);
 
+	List<Customer> finaAllLazy();
+
 	List<Customer> findAll();
 
 	Customer readByLogin(String login);

@@ -1,7 +1,7 @@
 package by.sinkevich.dao.impl;
 
 import by.sinkevich.dao.AccountDao;
-import by.sinkevich.mapper.AccountMapper;
+import by.sinkevich.mapper.AccountRowMapper;
 import by.sinkevich.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,12 +20,12 @@ public class AccountDaoImpl implements AccountDao {
 
 	private JdbcTemplate jdbcTemplate;
 
-	private AccountMapper accountMapper;
+	private AccountRowMapper rowMapper;
 
 	@Autowired
-	public AccountDaoImpl(JdbcTemplate jdbcTemplate, AccountMapper accountMapper) {
+	public AccountDaoImpl(JdbcTemplate jdbcTemplate, AccountRowMapper rowMapper) {
 		this.jdbcTemplate = jdbcTemplate;
-		this.accountMapper = accountMapper;
+		this.rowMapper = rowMapper;
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class AccountDaoImpl implements AccountDao {
 	public Account readById(long id) {
 		String sql = "SELECT * FROM account WHERE id = ?";
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		List<Account> accounts = jdbcTemplate.query(sql, pss, accountMapper);
+		List<Account> accounts = jdbcTemplate.query(sql, pss, rowMapper);
 		return accounts.get(0);
 	}
 
@@ -72,6 +72,6 @@ public class AccountDaoImpl implements AccountDao {
 	@Override
 	public List<Account> findAll() {
 		String sql = "SELECT * FROM account";
-		return jdbcTemplate.query(sql, accountMapper);
+		return jdbcTemplate.query(sql, rowMapper);
 	}
 }

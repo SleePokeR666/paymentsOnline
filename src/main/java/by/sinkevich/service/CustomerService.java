@@ -18,5 +18,7 @@ public interface CustomerService {
 
 	List<Customer> findAll();
 
+	List<Customer> findAllLazy();
+
 	Customer readByLogin(String login, String password);
 }

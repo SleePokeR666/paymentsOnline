@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 @Component
-public class CreditCardMapper implements RowMapper<CreditCard> {
+public class CreditCardRowMapper implements RowMapper<CreditCard> {
 
 	@Override
 	public CreditCard mapRow(ResultSet rs, int rowNum) throws SQLException {

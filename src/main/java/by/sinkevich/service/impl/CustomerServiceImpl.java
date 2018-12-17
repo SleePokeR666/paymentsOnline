@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@Transactional(isolation = Isolation.REPEATABLE_READ)
+@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 public class CustomerServiceImpl implements CustomerService {
 
 	private static final Logger LOG = LogManager.getLogger();
@@ -41,11 +41,12 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public long save(Customer customer) {
 		encodeCustomerPassword(customer);
 		long customerId = customerDao.save(customer);
 		customer.setId(customerId);
-		LOG.trace("{} created in database. " + customer);
+		LOG.debug("{} created in database. " + customer);
 
 		Account account = new Account();
 		account.setActive(true);
@@ -65,35 +66,38 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public Customer readByIdLazy(long id) {
 		return customerDao.readByIdLazy(id);
 	}
 
 	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public Customer readById(long id) {
 		return customerDao.readById(id);
 	}
 
 	@Override
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public void update(Customer customer) {
 		customerDao.update(customer);
 	}
 
 	@Override
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public void delete(long id) {
 		customerDao.delete(id);
 	}
 
 	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
+	public List<Customer> findAllLazy() {
+		return customerDao.finaAllLazy();
+	}
+
+	@Override
 	public List<Customer> findAll() {
 		return customerDao.findAll();
 	}
 
 	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
 	public Customer readByLogin(String login, String password) {
 		Customer customer = customerDao.readByLogin(login);
 		if (!passwordEncoder.matches(password, customer.getPassword())) {

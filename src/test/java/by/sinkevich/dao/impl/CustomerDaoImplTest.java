@@ -43,7 +43,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 	}
 
 	@Test
-	public void readByIdTest() {
+	public void readByIdLazyTest() {
 		Customer expected = new Customer();
 		expected.setId(1);
 		expected.setName("Денис");
@@ -56,7 +56,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		assertEquals(actual, expected);
 	}
 
-	@Test(dependsOnMethods = "readByIdTest")
+	@Test(dependsOnMethods = "readByIdLazyTest")
 	public void updateTest() {
 		Customer expected = new Customer();
 		expected.setId(1);
@@ -72,7 +72,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 	}
 
 	@Test
-	public void findAllTest() {
+	public void findAllLazyTest() {
 		List<Customer> expected = new ArrayList<>();
 		Customer expectedCustomer = new Customer();
 		expectedCustomer.setId(1);
@@ -82,7 +82,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		expectedCustomer.setIsAdmin(true);
 		expected.add(expectedCustomer);
 
-		List<Customer> actual = customerDao.findAll();
+		List<Customer> actual = customerDao.finaAllLazy();
 
 		assertEquals(actual, expected);
 	}

@@ -1,7 +1,7 @@
 package by.sinkevich.dao.impl;
 
 import by.sinkevich.dao.CreditCardDao;
-import by.sinkevich.mapper.CreditCardMapper;
+import by.sinkevich.mapper.CreditCardRowMapper;
 import by.sinkevich.model.CreditCard;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -20,12 +20,12 @@ public class CreditCardDaoImpl implements CreditCardDao {
 
 	private JdbcTemplate jdbcTemplate;
 
-	private CreditCardMapper creditCardMapper;
+	private CreditCardRowMapper rowMapper;
 
 	@Autowired
-	public CreditCardDaoImpl(JdbcTemplate jdbcTemplate, CreditCardMapper creditCardMapper) {
+	public CreditCardDaoImpl(JdbcTemplate jdbcTemplate, CreditCardRowMapper rowMapper) {
 		this.jdbcTemplate = jdbcTemplate;
-		this.creditCardMapper = creditCardMapper;
+		this.rowMapper = rowMapper;
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	public CreditCard readById(long id) {
 		String sql = "SELECT * FROM credit_card WHERE id = ?";
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		List<CreditCard> creditCards = jdbcTemplate.query(sql, pss, creditCardMapper);
+		List<CreditCard> creditCards = jdbcTemplate.query(sql, pss, rowMapper);
 		return creditCards.get(0);
 	}
 
@@ -72,6 +72,6 @@ public class CreditCardDaoImpl implements CreditCardDao {
 	@Override
 	public List<CreditCard> findAll() {
 		String sql = "SELECT * FROM credit_card";
-		return jdbcTemplate.query(sql, creditCardMapper);
+		return jdbcTemplate.query(sql, rowMapper);
 	}
 }
