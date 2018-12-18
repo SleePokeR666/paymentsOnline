@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 import org.testng.annotations.Test;
 
@@ -20,7 +21,7 @@ import static org.testng.Assert.assertEquals;
 @Sql(scripts = {
 		"classpath:scripts/create_tables.sql",
 		"classpath:scripts/insert_data.sql"
-})
+}, config = @SqlConfig(encoding = "UTF-8"))
 @Sql(scripts = "classpath:scripts/drop_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
 
@@ -46,7 +47,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 	public void readByIdLazyTest() {
 		Customer expected = new Customer();
 		expected.setId(1);
-		expected.setName("Денис");
+		expected.setName("FullName");
 		expected.setPassword("Password");
 		expected.setLogin("Login");
 		expected.setIsAdmin(true);
@@ -76,7 +77,7 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		List<Customer> expected = new ArrayList<>();
 		Customer expectedCustomer = new Customer();
 		expectedCustomer.setId(1);
-		expectedCustomer.setName("Денис");
+		expectedCustomer.setName("FullName");
 		expectedCustomer.setPassword("Password");
 		expectedCustomer.setLogin("Login");
 		expectedCustomer.setIsAdmin(true);

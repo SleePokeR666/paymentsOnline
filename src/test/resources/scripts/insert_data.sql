@@ -1,1 +1,1 @@
-INSERT INTO customer (name, login, password) VALUES ('Денис', 'Login', 'Password')
+INSERT INTO customer (name, login, password) VALUES ('FullName', 'Login', 'Password')
