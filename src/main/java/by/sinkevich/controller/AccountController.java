@@ -51,7 +51,7 @@ public class AccountController {
 	}
 
 	@GetMapping("customer/account/{accountId}/deposit")
-	public String go2depositPage() {
+	public String go2DepositPage() {
 		return "customer/deposit";
 	}
 
@@ -64,6 +64,32 @@ public class AccountController {
 		paymentService.save(payment);
 		account.setBalance(account.getBalance() + payment.getAmount());
 		accountService.update(account);
+		return "redirect:/customer/" + customer.getId();
+	}
+
+	@GetMapping("customer/account/{accountId}/transfer")
+	public String go2TransferPage() {
+		return "customer/transfer";
+	}
+
+	@PostMapping("customer/account/{accountId}/transfer")
+	public String transfer(
+			@SessionAttribute Customer customer,
+			@PathVariable long accountId,
+			@ModelAttribute Payment payment,
+			@RequestParam long targetAccountId) {
+		Account fromAccount = getAccountByIdFromCustomer(customer, accountId);
+		Account toAccount = accountService.readById(targetAccountId);
+		payment.setDate(new Date());
+		payment.setStatus("completed");
+		payment.setFromAccount(fromAccount);
+		payment.setToAccount(toAccount);
+		paymentService.save(payment);
+
+		fromAccount.setBalance(fromAccount.getBalance() - payment.getAmount());
+		toAccount.setBalance(toAccount.getBalance() + payment.getAmount());
+		accountService.update(fromAccount);
+		accountService.update(toAccount);
 		return "redirect:/customer/" + customer.getId();
 	}
 

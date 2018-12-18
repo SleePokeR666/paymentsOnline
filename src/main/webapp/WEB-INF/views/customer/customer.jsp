@@ -53,7 +53,8 @@
 								<c:choose>
 									<c:when test="${creditCard.account.isActive}">
 										<div class="w3-section w3-center">
-											<a class="w3-button w3-green">Сделать перевод</a>
+											<a href="account/${creditCard.account.id}/transfer"
+											   class="w3-button w3-green">Сделать перевод</a>
 										</div>
 										<div class="w3-section w3-center">
 											<a href="account/${creditCard.account.id}/deposit"
