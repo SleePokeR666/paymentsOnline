@@ -6,9 +6,9 @@ import by.sinkevich.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -18,11 +18,6 @@ import static org.testng.Assert.assertEquals;
 
 @ContextConfiguration(classes = {SpringConfig.class})
 @TestPropertySource(properties = {"datasource.url = jdbc:mysql://localhost:3306/test_payments"})
-@Sql(scripts = {
-		"classpath:scripts/create_tables.sql",
-		"classpath:scripts/insert_data.sql"
-}, config = @SqlConfig(encoding = "UTF-8"))
-@Sql(scripts = "classpath:scripts/drop_tables.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContextTests {
 
 	@Autowired
@@ -86,5 +81,16 @@ public class CustomerDaoImplTest extends AbstractTransactionalTestNGSpringContex
 		List<Customer> actual = customerDao.finaAllLazy();
 
 		assertEquals(actual, expected);
+	}
+
+	@BeforeClass
+	public void prepareDatabase() {
+		executeSqlScript("classpath:scripts/create_tables.sql", false);
+		executeSqlScript("classpath:scripts/insert_data.sql", false);
+	}
+
+	@AfterClass
+	public void clearDatabase() {
+		executeSqlScript("classpath:scripts/drop_tables.sql", false);
 	}
 }
