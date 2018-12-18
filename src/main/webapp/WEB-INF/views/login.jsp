@@ -16,14 +16,18 @@
 	<div class="w3-row w3-section">
 		<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
 		<div class="w3-rest">
-			<input class="w3-input w3-border" name="login" type="text" placeholder="Login">
+			<input class="w3-input w3-border" name="login" type="text"
+				   placeholder="Login" required pattern="[A-Za-z0-9_]{3,}"
+				   title="At least three alphanumeric or underscore symbols">
 		</div>
 	</div>
 
 	<div class="w3-row w3-section">
 		<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-unlock-alt"></i></div>
 		<div class="w3-rest">
-			<input class="w3-input w3-border" name="password" type="text" placeholder="Password">
+			<input class="w3-input w3-border" name="password" type="password"
+				   placeholder="Password" required pattern="[A-Za-z0-9_]{5,}"
+				   title="At least six alphanumeric or underscore symbols">
 		</div>
 	</div>
 

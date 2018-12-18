@@ -8,6 +8,7 @@ import by.sinkevich.service.AccountService;
 import by.sinkevich.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -68,7 +69,11 @@ public class AccountController {
 	}
 
 	@GetMapping("customer/account/{accountId}/transfer")
-	public String go2TransferPage() {
+	public String go2TransferPage(@SessionAttribute Customer customer,
+								  @PathVariable long accountId,
+								  Model model) {
+		Account account = getAccountByIdFromCustomer(customer, accountId);
+		model.addAttribute("balance", account.getBalance());
 		return "customer/transfer";
 	}
 

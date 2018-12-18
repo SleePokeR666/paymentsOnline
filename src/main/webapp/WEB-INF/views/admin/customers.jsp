@@ -22,7 +22,7 @@
 		<c:forEach items="${customers}" var="customer">
 			<c:forEach items="${customer.creditCards}" var="creditCard">
 				<tr>
-					<td><a href="customer/${customer.id}">${customer.id}</a></td>
+					<td>${customer.id}</td>
 					<td>${customer.name}</td>
 					<td>${customer.login}</td>
 					<td>${creditCard.number}</td>
@@ -39,7 +39,6 @@
 							</td>
 						</c:otherwise>
 					</c:choose>
-					<td><a href="update/${customer.id}">Update</a></td>
 				</tr>
 			</c:forEach>
 		</c:forEach>

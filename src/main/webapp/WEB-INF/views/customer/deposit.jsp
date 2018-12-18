@@ -17,7 +17,8 @@
 	<div class="w3-row w3-section">
 		<div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
 		<div class="w3-rest">
-			<input class="w3-input w3-border" name="amount" type="text" placeholder="amount">
+			<input class="w3-input w3-border" name="amount" type="number" placeholder="amount"
+				   required min="1" step="0.01">
 		</div>
 	</div>
 
