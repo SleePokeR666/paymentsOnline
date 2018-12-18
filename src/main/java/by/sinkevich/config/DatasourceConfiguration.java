@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 @Configuration
-@PropertySource(value = "classpath:payments.online.database.properties")
+@PropertySource(value = "classpath:payments.online.properties")
 public class DatasourceConfiguration {
 
 	@Value("${datasource.driver}")

@@ -11,7 +11,7 @@
 <!-- Page container -->
 <div class="w3-container">
 	<header class="w3-blue-grey w3-center">
-		<h1>Онлайн платежи, как бальзам для души!</h1>
+		<h1>Online payments header</h1>
 	</header>
 
 	<!-- The grid -->
@@ -21,7 +21,7 @@
 		<div class="w3-twothird">
 			<div class="w3-container w3-light-blue">
 				<h1>
-					Здесь будет логотип от бога!
+					Some info or picture or both
 				</h1>
 			</div>
 			<!-- End left column -->
@@ -37,17 +37,13 @@
 					<a href="register" class="w3-bar-item w3-button w3-deep-purple w3-right w3-margin">Register</a>
 				</div>
 			</div>
-			<div>
-				<a href="customers">View all customers</a>
-			</div>
-
 			<!-- End right column -->
 		</div>
 
 		<!-- End the grid -->
 	</div>
 	<footer class="w3-blue-grey w3-center">
-		<h1>Самый тёмный подвал в мире!</h1>
+		<h1>Online payments footer</h1>
 	</footer>
 
 	<!-- End page container -->

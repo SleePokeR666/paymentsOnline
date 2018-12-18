@@ -66,33 +66,6 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer readByIdLazy(long id) {
-		return customerDao.readByIdLazy(id);
-	}
-
-	@Override
-	public Customer readById(long id) {
-		return customerDao.readById(id);
-	}
-
-	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ)
-	public void update(Customer customer) {
-		customerDao.update(customer);
-	}
-
-	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ)
-	public void delete(long id) {
-		customerDao.delete(id);
-	}
-
-	@Override
-	public List<Customer> findAllLazy() {
-		return customerDao.finaAllLazy();
-	}
-
-	@Override
 	public List<Customer> findAll() {
 		return customerDao.findAll();
 	}

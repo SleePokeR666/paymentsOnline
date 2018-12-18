@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional(isolation = Isolation.REPEATABLE_READ)
 public class AccountServiceImpl implements AccountService {
@@ -41,16 +39,5 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void update(Account account) {
 		accountDao.update(account);
-	}
-
-	@Override
-	public void delete(long id) {
-		accountDao.delete(id);
-	}
-
-	@Override
-	@Transactional(isolation = Isolation.REPEATABLE_READ, readOnly = true)
-	public List<Account> findAll() {
-		return accountDao.findAll();
 	}
 }

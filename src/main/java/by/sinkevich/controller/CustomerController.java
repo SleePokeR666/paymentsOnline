@@ -59,17 +59,4 @@ public class CustomerController {
 		model.addAttribute("customers", customerService.findAll());
 		return "/admin/customers";
 	}
-
-
-	/*@GetMapping("/update/{id}")
-	public String updateCustomerForm(@PathVariable(value = "id") long id, Model model) {
-		model.addAttribute("customer", customerService.readByIdLazy(id));
-		return "updateCustomer";
-	}
-*//*
-	@PostMapping("/update/updateUser")
-	public String updateCustomer(@ModelAttribute Customer customer) {
-		customerService.update(customer);
-		return "redirect:/customers";
-	}*/
 }

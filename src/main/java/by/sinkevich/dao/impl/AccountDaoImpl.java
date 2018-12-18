@@ -61,17 +61,4 @@ public class AccountDaoImpl implements AccountDao {
 		};
 		jdbcTemplate.update(sql, pss);
 	}
-
-	@Override
-	public void delete(long id) {
-		String sql = "DELETE FROM account WHERE id = ?";
-		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		jdbcTemplate.update(sql, pss);
-	}
-
-	@Override
-	public List<Account> findAll() {
-		String sql = "SELECT * FROM account";
-		return jdbcTemplate.query(sql, rowMapper);
-	}
 }
