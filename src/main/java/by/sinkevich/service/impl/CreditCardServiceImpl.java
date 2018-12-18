@@ -26,7 +26,7 @@ public class CreditCardServiceImpl implements CreditCardService {
 	@Override
 	public long save(CreditCard creditCard) {
 		creditCard.setId(creditCardDao.save(creditCard));
-		LOG.trace("{} created in database. " + creditCard);
+		LOG.debug("{} created in database. " + creditCard);
 		return creditCard.getId();
 	}
 }

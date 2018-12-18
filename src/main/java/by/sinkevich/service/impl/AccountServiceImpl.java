@@ -26,7 +26,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public long save(Account account) {
 		account.setId(accountDao.save(account));
-		LOG.trace("{} created in database. " + account);
+		LOG.debug("{} created in database. " + account);
 		return account.getId();
 	}
 
@@ -39,5 +39,6 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void update(Account account) {
 		accountDao.update(account);
+		LOG.debug("{} updated in database. " + account);
 	}
 }
