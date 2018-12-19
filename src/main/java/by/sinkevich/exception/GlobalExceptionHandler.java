@@ -13,9 +13,15 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler
 	public String handleException(Exception exception, Model model) {
-		String errorMessage = exception.getMessage();
-		log.error(errorMessage, exception);
-		model.addAttribute("errorMessage", errorMessage);
+		log.error(exception.getMessage(), exception);
+		model.addAttribute("errorMessage", "Произошла непоправимая ошибка! " +
+				"Попробуйте зайти ещё раз. Просим прощения за причинённые неудобства!");
 		return "error";
+	}
+
+	@ExceptionHandler(RegistrationException.class)
+	public String handleRegistrationException(RegistrationException exception, Model model) {
+		model.addAttribute("errorMessage", exception.getMessage());
+		return "register";
 	}
 }

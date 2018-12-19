@@ -10,5 +10,7 @@ public interface CustomerService {
 
 	List<Customer> findAll();
 
+	Customer readByLogin(String login);
+
 	Customer readByLogin(String login, String password);
 }

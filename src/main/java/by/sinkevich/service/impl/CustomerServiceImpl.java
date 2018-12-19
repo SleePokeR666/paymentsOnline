@@ -1,6 +1,7 @@
 package by.sinkevich.service.impl;
 
 import by.sinkevich.dao.CustomerDao;
+import by.sinkevich.exception.RegistrationException;
 import by.sinkevich.model.Account;
 import by.sinkevich.model.CreditCard;
 import by.sinkevich.model.Customer;
@@ -43,6 +44,12 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	@Transactional(isolation = Isolation.REPEATABLE_READ)
 	public long save(Customer customer) {
+		if (readByLogin(customer.getLogin()) != null) {
+			String message = "Пользователь с указанным именем уже существует. " +
+					"Пожалуйста выберите другой логин.";
+			LOG.error("Failed to create customer with login {}. Already exists.", customer.getLogin());
+			throw new RegistrationException(message);
+		}
 		encodeCustomerPassword(customer);
 		long customerId = customerDao.save(customer);
 		customer.setId(customerId);
@@ -68,6 +75,11 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public List<Customer> findAll() {
 		return customerDao.findAll();
+	}
+
+	@Override
+	public Customer readByLogin(String login) {
+		return customerDao.readByLogin(login);
 	}
 
 	@Override

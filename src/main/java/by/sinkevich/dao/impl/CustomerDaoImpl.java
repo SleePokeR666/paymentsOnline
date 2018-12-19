@@ -114,6 +114,6 @@ public class CustomerDaoImpl implements CustomerDao {
 	public Customer readByLogin(String login) {
 		PreparedStatementSetter pss = ps -> ps.setString(1, login);
 		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_LOGIN_SQL, pss, rowMapper);
-		return customers.get(0);
+		return customers.size() != 0 ? customers.get(0) : null;
 	}
 }
