@@ -28,7 +28,7 @@
 		<div class="w3-rest">
 			<input class="w3-input w3-border" name="password" type="password"
 				   placeholder="Password" required pattern="[A-Za-z0-9_]{5,}"
-				   title="At least six alphanumeric or underscore symbols">
+				   title="At least five alphanumeric or underscore symbols">
 		</div>
 	</div>
 

@@ -33,21 +33,20 @@ public class AccountController {
 	@GetMapping("customer/account/{accountId}/block")
 	public String block(@SessionAttribute Customer customer, @PathVariable long accountId) {
 		Account account = getAccountByIdFromCustomer(customer, accountId);
-		String view = "redirect:/customer/" + customer.getId();
-		if (account == null) {
-			account = accountService.readById(accountId);
+		String view;
+		if (account != null) {
+			accountService.block(account);
+			view = "redirect:/customer/" + customer.getId();
+		} else {
+			accountService.blockById(accountId);
 			view = "redirect:/customer/customers";
 		}
-		account.setIsActive(false);
-		accountService.update(account);
 		return view;
 	}
 
 	@GetMapping("customer/account/{accountId}/unblock")
 	public String unBlock(@PathVariable long accountId) {
-		Account account = accountService.readById(accountId);
-		account.setIsActive(true);
-		accountService.update(account);
+		accountService.unBlock(accountId);
 		return "redirect:/customer/customers";
 	}
 

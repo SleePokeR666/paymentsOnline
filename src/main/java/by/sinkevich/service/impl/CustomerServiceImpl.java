@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public long save(Customer customer) {
 		if (readByLogin(customer.getLogin()) != null) {
 			String message = "Пользователь с указанным именем уже существует. " +
-					"Пожалуйста выберите другой логин.";
+					"Пожалуйста, выберите другой логин.";
 			LOG.error("Failed to create customer with login {}. Already exists.", customer.getLogin());
 			throw new RegistrationException(message);
 		}

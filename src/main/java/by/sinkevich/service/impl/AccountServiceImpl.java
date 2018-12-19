@@ -41,4 +41,25 @@ public class AccountServiceImpl implements AccountService {
 		accountDao.update(account);
 		LOG.debug("{} updated in database. " + account);
 	}
+
+	@Override
+	public void block(Account account) {
+		account.setIsActive(false);
+		accountDao.update(account);
+		LOG.debug("{} blocked. ", account);
+	}
+
+	@Override
+	public void blockById(long id) {
+		Account account = readById(id);
+		block(account);
+	}
+
+	@Override
+	public void unBlock(long id) {
+		Account account = readById(id);
+		account.setIsActive(true);
+		update(account);
+		LOG.debug("{} unblocked. ", account);
+	}
 }

@@ -18,6 +18,10 @@ import java.util.List;
 @Repository
 public class AccountDaoImpl implements AccountDao {
 
+	private static final String INSERT_INTO_ACCOUNT_SQL = "INSERT INTO account (balance, active) VALUES (?, ?)";
+	private static final String READ_ACCOUNT_BY_ID_SQL = "SELECT * FROM account WHERE id = ?";
+	private static final String UPDATE_ACCOUNT_SQL = "UPDATE account SET balance = ?, active = ? WHERE id = ?";
+
 	private JdbcTemplate jdbcTemplate;
 
 	private AccountRowMapper rowMapper;
@@ -30,10 +34,9 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public long save(Account account) {
-		String sql = "INSERT INTO account (balance, active) VALUES (?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		PreparedStatementCreator psc = con -> {
-			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = con.prepareStatement(INSERT_INTO_ACCOUNT_SQL, Statement.RETURN_GENERATED_KEYS);
 			ps.setDouble(1, account.getBalance());
 			ps.setBoolean(2, account.getIsActive());
 			return ps;
@@ -45,20 +48,18 @@ public class AccountDaoImpl implements AccountDao {
 
 	@Override
 	public Account readById(long id) {
-		String sql = "SELECT * FROM account WHERE id = ?";
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
-		List<Account> accounts = jdbcTemplate.query(sql, pss, rowMapper);
-		return accounts.get(0);
+		List<Account> accounts = jdbcTemplate.query(READ_ACCOUNT_BY_ID_SQL, pss, rowMapper);
+		return accounts.size() != 0 ? accounts.get(0) : null;
 	}
 
 	@Override
 	public void update(Account account) {
-		String sql = "UPDATE account SET balance = ?, active = ? WHERE id = ?";
 		PreparedStatementSetter pss = ps -> {
 			ps.setDouble(1, account.getBalance());
 			ps.setBoolean(2, account.getIsActive());
 			ps.setLong(3, account.getId());
 		};
-		jdbcTemplate.update(sql, pss);
+		jdbcTemplate.update(UPDATE_ACCOUNT_SQL, pss);
 	}
 }

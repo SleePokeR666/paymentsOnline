@@ -30,7 +30,7 @@
 			<label class="w3-text-deep-purple"><b>Password</b></label>
 			<input class="w3-input w3-border w3-sand" name="password" type="password"
 				   placeholder="Password" required pattern="[A-Za-z0-9_]{5,}"
-				   title="At least six alphanumeric or underscore symbols">
+				   title="At least five alphanumeric or underscore symbols">
 		</p>
 		<p>
 			<a class="w3-btn w3-deep-purple" href="${pageContext.request.contextPath}/index">Back

@@ -10,4 +10,10 @@ public interface AccountService {
 
 	void update(Account account);
 
+	void block(Account account);
+
+	void blockById(long id);
+
+	void unBlock(long id);
+
 }
