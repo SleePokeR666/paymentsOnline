@@ -83,4 +83,23 @@ public class AccountServiceImpl implements AccountService {
 		LOG.debug("Deposit successfully completed. Account {}, amount {} ", account, amount);
 		return true;
 	}
+
+	@Override
+	public boolean transfer(Account fromAccount, Account toAccount, Double amount) {
+		Payment payment = new Payment();
+		payment.setAmount(amount);
+		payment.setDate(new Date());
+		payment.setStatus("completed");
+		payment.setFromAccount(fromAccount);
+		payment.setToAccount(toAccount);
+		paymentService.save(payment);
+
+		fromAccount.setBalance(fromAccount.getBalance() - amount);
+		toAccount.setBalance(toAccount.getBalance() + amount);
+		update(fromAccount);
+		update(toAccount);
+		LOG.debug("Transfer successfully completed from Account {}, to Account {}, amount {} ",
+				fromAccount, toAccount, amount);
+		return true;
+	}
 }

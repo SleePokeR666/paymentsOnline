@@ -18,4 +18,6 @@ public interface AccountService {
 
 	boolean deposit(Account account, Double amount);
 
+	boolean transfer(Account fromAccount, Account toAccount, Double amount);
+
 }

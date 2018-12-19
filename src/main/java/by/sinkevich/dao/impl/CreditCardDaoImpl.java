@@ -16,6 +16,8 @@ import java.sql.Statement;
 public class CreditCardDaoImpl implements CreditCardDao {
 
 	private JdbcTemplate jdbcTemplate;
+	private static final String SAVE_CREDIT_CARD_SQL = "INSERT INTO credit_card " +
+			"(number, customer_id, account_id) VALUES (?, ?, ?)";
 
 	@Autowired
 	public CreditCardDaoImpl(JdbcTemplate jdbcTemplate) {
@@ -24,10 +26,9 @@ public class CreditCardDaoImpl implements CreditCardDao {
 
 	@Override
 	public long save(CreditCard creditCard) {
-		String sql = "INSERT INTO credit_card (number, customer_id, account_id) VALUES (?, ?, ?)";
 		KeyHolder keyHolder = new GeneratedKeyHolder();
 		PreparedStatementCreator psc = con -> {
-			PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement ps = con.prepareStatement(SAVE_CREDIT_CARD_SQL, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, creditCard.getNumber());
 			ps.setLong(2, creditCard.getCustomer().getId());
 			ps.setLong(3, creditCard.getAccount().getId());

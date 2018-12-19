@@ -3,31 +3,24 @@ package by.sinkevich.controller;
 import by.sinkevich.model.Account;
 import by.sinkevich.model.CreditCard;
 import by.sinkevich.model.Customer;
-import by.sinkevich.model.Payment;
 import by.sinkevich.service.AccountService;
-import by.sinkevich.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Date;
 
 @Controller("/")
 public class AccountController {
 
 	private AccountService accountService;
 
-	private PaymentService paymentService;
-
 	public AccountController() {
 
 	}
 
 	@Autowired
-	public AccountController(AccountService accountService, PaymentService paymentService) {
+	public AccountController(AccountService accountService) {
 		this.accountService = accountService;
-		this.paymentService = paymentService;
 	}
 
 	@GetMapping("customer/account/{accountId}/block")
@@ -77,20 +70,11 @@ public class AccountController {
 	public String transfer(
 			@SessionAttribute Customer customer,
 			@PathVariable long accountId,
-			@ModelAttribute Payment payment,
+			@RequestParam Double amount,
 			@RequestParam long targetAccountId) {
 		Account fromAccount = getAccountByIdFromCustomer(customer, accountId);
 		Account toAccount = accountService.readById(targetAccountId);
-		payment.setDate(new Date());
-		payment.setStatus("completed");
-		payment.setFromAccount(fromAccount);
-		payment.setToAccount(toAccount);
-		paymentService.save(payment);
-
-		fromAccount.setBalance(fromAccount.getBalance() - payment.getAmount());
-		toAccount.setBalance(toAccount.getBalance() + payment.getAmount());
-		accountService.update(fromAccount);
-		accountService.update(toAccount);
+		accountService.transfer(fromAccount, toAccount, amount);
 		return "redirect:/customer/" + customer.getId();
 	}
 
