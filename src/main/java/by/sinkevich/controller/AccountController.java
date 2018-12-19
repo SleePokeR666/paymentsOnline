@@ -56,14 +56,11 @@ public class AccountController {
 	}
 
 	@PostMapping("customer/account/{accountId}/deposit")
-	public String deposit(@SessionAttribute Customer customer, @PathVariable long accountId, @ModelAttribute Payment payment) {
+	public String deposit(@SessionAttribute Customer customer,
+						  @PathVariable long accountId,
+						  @RequestParam Double amount) {
 		Account account = getAccountByIdFromCustomer(customer, accountId);
-		payment.setDate(new Date());
-		payment.setToAccount(account);
-		payment.setStatus("completed");
-		paymentService.save(payment);
-		account.setBalance(account.getBalance() + payment.getAmount());
-		accountService.update(account);
+		accountService.deposit(account, amount);
 		return "redirect:/customer/" + customer.getId();
 	}
 

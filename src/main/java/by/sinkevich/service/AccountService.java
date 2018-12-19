@@ -16,4 +16,6 @@ public interface AccountService {
 
 	void unBlock(long id);
 
+	boolean deposit(Account account, Double amount);
+
 }
