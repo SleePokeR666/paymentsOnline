@@ -43,7 +43,7 @@ public class CustomerController {
 
 	@PostMapping("/login")
 	public String login(@ModelAttribute("customerData") Customer customerData, Model model) {
-		Customer customer = customerService.readByLogin(customerData.getLogin(), customerData.getPassword());
+		Customer customer = customerService.authentication(customerData.getLogin(), customerData.getPassword());
 		model.addAttribute("customer", customer);
 		return "redirect:" + customer.getId();
 	}

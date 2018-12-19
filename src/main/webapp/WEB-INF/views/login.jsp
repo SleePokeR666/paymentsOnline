@@ -9,7 +9,8 @@
 	  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <body>
 
-<form action="customer/login" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin"
+<form action="${pageContext.request.contextPath}/customer/login"
+	  class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin"
 	  method="post" accept-charset="UTF-8">
 	<h2 class="w3-center">Log in to your account</h2>
 
@@ -31,7 +32,12 @@
 		</div>
 	</div>
 
+	<div>${errorMessage}</div>
+
 	<button class="w3-button w3-block w3-section w3-blue w3-ripple w3-padding">Login</button>
+	<a class="w3-button w3-block w3-section w3-blue w3-ripple w3-padding"
+	   href="${pageContext.request.contextPath}/index">Back
+	</a>
 
 </form>
 </body>

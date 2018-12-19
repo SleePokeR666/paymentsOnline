@@ -1,6 +1,7 @@
 package by.sinkevich.service.impl;
 
 import by.sinkevich.dao.CustomerDao;
+import by.sinkevich.exception.AuthenticationException;
 import by.sinkevich.exception.RegistrationException;
 import by.sinkevich.model.Account;
 import by.sinkevich.model.CreditCard;
@@ -83,10 +84,15 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public Customer readByLogin(String login, String password) {
+	public Customer authentication(String login, String password) {
 		Customer customer = customerDao.readByLogin(login);
+		if (customer == null) {
+			LOG.error("Failed to authenticate customer with login {}. Doesn't exists.", login);
+			throw new AuthenticationException("Пользователя с заданным логином не существует.");
+		}
 		if (!passwordEncoder.matches(password, customer.getPassword())) {
-			throw new IllegalArgumentException("Неправильно введён пароль. Попробуйте ещё раз!");
+			LOG.error("Failed to authenticate customer with login {}. Wrong password.", login);
+			throw new AuthenticationException("Неправильно введён пароль! Попробуйте ещё раз.");
 		}
 		return customerDao.readById(customer.getId());
 	}

@@ -33,6 +33,8 @@
 				   title="At least six alphanumeric or underscore symbols">
 		</p>
 		<p>
+			<a class="w3-btn w3-deep-purple" href="${pageContext.request.contextPath}/index">Back
+			</a>
 			<button class="w3-btn w3-deep-purple">Register</button>
 		</p>
 	</form>

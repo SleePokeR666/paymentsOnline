@@ -24,4 +24,10 @@ public class GlobalExceptionHandler {
 		model.addAttribute("errorMessage", exception.getMessage());
 		return "register";
 	}
+
+	@ExceptionHandler(AuthenticationException.class)
+	public String handleAuthenticationException(AuthenticationException exception, Model model) {
+		model.addAttribute("errorMessage", exception.getMessage());
+		return "login";
+	}
 }

@@ -72,14 +72,14 @@ public class CustomerDaoImpl implements CustomerDao {
 	public Customer readByIdLazy(long id) {
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
 		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_LAZY_SQl, pss, rowMapper);
-		return customers.get(0);
+		return customers.size() != 0 ? customers.get(0) : null;
 	}
 
 	@Override
 	public Customer readById(long id) {
 		PreparedStatementSetter pss = ps -> ps.setLong(1, id);
 		List<Customer> customers = jdbcTemplate.query(READ_CUSTOMER_BY_ID_SQl, pss, resultSetExtractor);
-		return customers.get(0);
+		return customers != null && customers.size() != 0 ? customers.get(0) : null;
 	}
 
 	@Override

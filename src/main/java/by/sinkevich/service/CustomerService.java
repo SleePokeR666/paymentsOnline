@@ -12,5 +12,5 @@ public interface CustomerService {
 
 	Customer readByLogin(String login);
 
-	Customer readByLogin(String login, String password);
+	Customer authentication(String login, String password);
 }
