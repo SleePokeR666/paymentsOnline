@@ -27,27 +27,27 @@ public class SpringConfig {
 	}
 
 	@Bean
-	public DataSource dataSource() {
+	public DataSource dataSource(DatasourceConfiguration datasourceConfiguration) {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(datasourceConfiguration().getDriverClassName());
-		dataSource.setUrl(datasourceConfiguration().getUrl());
-		dataSource.setUsername(datasourceConfiguration().getUsername());
-		dataSource.setPassword(datasourceConfiguration().getPassword());
+		dataSource.setDriverClassName(datasourceConfiguration.getDriverClassName());
+		dataSource.setUrl(datasourceConfiguration.getUrl());
+		dataSource.setUsername(datasourceConfiguration.getUsername());
+		dataSource.setPassword(datasourceConfiguration.getPassword());
 
 		Properties connectionProperties = new Properties();
-		connectionProperties.put("useSSL", datasourceConfiguration().getUseSSL());
+		connectionProperties.put("useSSL", datasourceConfiguration.getUseSSL());
 		connectionProperties.put("allowPublicKeyRetrieval",
-				datasourceConfiguration().getAllowPublicKeyRetrieval());
-		connectionProperties.put("useUnicode", datasourceConfiguration().getUseUnicode());
+				datasourceConfiguration.getAllowPublicKeyRetrieval());
+		connectionProperties.put("useUnicode", datasourceConfiguration.getUseUnicode());
 		connectionProperties.put("characterEncoding",
-				datasourceConfiguration().getCharacterEncoding());
+				datasourceConfiguration.getCharacterEncoding());
 		dataSource.setConnectionProperties(connectionProperties);
 		return dataSource;
 	}
 
 	@Bean
-	public JdbcTemplate jdbcTemplate() {
-		return new JdbcTemplate(dataSource());
+	public JdbcTemplate jdbcTemplate(DataSource dataSource) {
+		return new JdbcTemplate(dataSource);
 	}
 
 	@Bean
